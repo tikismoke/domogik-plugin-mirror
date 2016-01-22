@@ -61,7 +61,7 @@ class MirrorManager(XplPlugin):
         if not self.check_configured():
             return
 
-        self._config = Query(self.myxpl, self.log)
+#        self._config = Query(self.myxpl, self.log)
         mirror_device = str(self.get_config('device'))
 
         # Init Mir:ror
