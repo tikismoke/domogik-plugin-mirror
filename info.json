@@ -87,7 +87,7 @@
     "description": "Mirror interface",
     "domogik_min_version": "0.4.0",
     "name": "mirror",
-    "type": "mirror",
+    "type": "plugin",
     "version": "0.1",
     "tags": [
       "mirror",
