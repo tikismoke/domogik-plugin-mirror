@@ -42,30 +42,46 @@
           }
         ]
       }
+    },
+    "activated": {
+      "name": "activated",
+      "schema": "sensor.basic",
+      "parameters": {
+        "static": [],
+        "device": [],
+        "dynamic": [
+          {
+            "key": "current",
+            "ignore_values": "",
+            "sensor": "activated"
+          }
+        ]
+      }
     }
   },
   "device_types": {
-    "mirror": {
+    "mirror.mirror": {
       "id": "mirror.mirror",
       "description": "Switch one channel on a device",
       "name": "Mirror",
       "commands": [],
       "sensors": [
-        "present"
+        "activated"
       ],
       "parameters": [
         {
           "key": "address",
           "xpl": true,
           "description": "The self mirror (mirror)",
-          "type": "string"
+          "type": "string",
+          "default": "mirror"
         }
       ]
     },
-    "ztamp": {
-      "id": "mirror.tag",
+    "mirror.rfid": {
+      "id": "mirror.rfid",
       "description": "Simple rfid tag like ztamp",
-      "name": "Tag",
+      "name": "Rfid",
       "commands": [],
       "sensors": [
         "present"
