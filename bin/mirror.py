@@ -98,6 +98,7 @@ class MirrorManager(XplPlugin):
         msg.add_data({"type" : type})
         msg.add_data({"current" : current})
         self.myxpl.send(msg)
+
 	print(msg)
 
 if __name__ == "__main__":
