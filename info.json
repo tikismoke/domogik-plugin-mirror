@@ -39,6 +39,7 @@
         "expire": 0,
         "round_value": 0
       }
+    }
   },
   "xpl_stats": {
     "current": {
@@ -109,6 +110,7 @@
       ]
     }
   },
+  "json_version": 2,
   "identity": {
     "author": "tikismoke",
     "author_email": "new.domodroid at gmail.com",
@@ -123,6 +125,5 @@
       "rfid",
       "ztamp"
     ]
-  },
-  "json_version": 2
+  }
 }
