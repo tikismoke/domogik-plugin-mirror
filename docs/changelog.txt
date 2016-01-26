@@ -5,4 +5,4 @@ Changelog
 0.1
 ===
 
-* Plugin creation
+* Plugin creation based on 0.3 old plugin

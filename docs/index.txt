@@ -6,7 +6,6 @@ Table Of Content
 
 .. toctree::
 
-    /script
+    /mirror
     /dev
-    /tests
     /changelog
