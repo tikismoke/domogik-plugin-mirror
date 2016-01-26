@@ -25,7 +25,20 @@
         "expire": 0,
         "round_value": 0
       }
-    }
+    },
+    "activated": {
+      "name": "Activated",
+      "data_type": "DT_State",
+      "conversion": "",
+      "incremental": false,
+      "timeout": 0,
+      "history": {
+        "store": true,
+        "duplicate": false,
+        "max": 0,
+        "expire": 0,
+        "round_value": 0
+      }
   },
   "xpl_stats": {
     "current": {
