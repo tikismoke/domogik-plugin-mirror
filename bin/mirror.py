@@ -94,7 +94,7 @@ class MirrorManager(XplPlugin):
         msg = XplMessage()
         msg.set_type("xpl-trig")
         msg.set_schema("sensor.basic")
-        msg.add_data({"device" : device})
+        msg.add_data({"address" : device})
         msg.add_data({"type" : type})
         msg.add_data({"current" : current})
         self.myxpl.send(msg)

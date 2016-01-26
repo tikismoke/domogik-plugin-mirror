@@ -15,7 +15,7 @@
     "present": {
       "name": "Present",
       "data_type": "DT_State",
-      "conversion": "",
+      "conversion": "from_low_high_to_DT_State",
       "incremental": false,
       "timeout": 0,
       "history": {
@@ -29,7 +29,7 @@
     "activated": {
       "name": "Activated",
       "data_type": "DT_State",
-      "conversion": "",
+      "conversion": "from_low_high_to_DT_State",
       "incremental": false,
       "timeout": 0,
       "history": {
