@@ -23,7 +23,7 @@ Mir:ror faced up
     {
     device=mirror
     type=activated
-    current=HIGH
+    current=high
     }
 
 Mir:ror faced down
@@ -39,7 +39,7 @@ Mir:ror faced down
     {
     device=mirror
     type=activated
-    current=LOW
+    current=low
     }
 
 A RFID element is detected
@@ -55,7 +55,7 @@ A RFID element is detected
     {
     device=
     type=present
-    current=HIGH
+    current=high
     }
 
 A RFID element is no more detected
@@ -71,5 +71,5 @@ A RFID element is no more detected
     {
     device=
     type=present
-    current=LOW
+    current=low
     }
