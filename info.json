@@ -46,7 +46,12 @@
       "name": "current",
       "schema": "sensor.basic",
       "parameters": {
-        "static": [],
+        "static": [
+	    {
+            "key": "type",
+            "value": "present"
+            }
+	],
         "device": [],
         "dynamic": [
           {
@@ -61,7 +66,12 @@
       "name": "activated",
       "schema": "sensor.basic",
       "parameters": {
-        "static": [],
+        "static": [
+	    {
+            "key": "type",
+            "value": "activated"
+            }
+	],
         "device": [],
         "dynamic": [
           {
@@ -76,7 +86,7 @@
   "device_types": {
     "mirror.mirror": {
       "id": "mirror.mirror",
-      "description": "Switch one channel on a device",
+      "description": "Mir:ror device",
       "name": "Mirror",
       "commands": [],
       "sensors": [
