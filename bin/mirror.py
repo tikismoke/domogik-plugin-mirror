@@ -85,7 +85,7 @@ class MirrorManager(Plugin):
         # Start reading Mir:ror
         mirror_process = threading.Thread(None,
                                    mirror.listen,
-                                   "mirror-process-reader",
+				   "mirror-process-reader",
                                    (self.get_stop(),),
                                    {})
         self.register_thread(mirror_process)
@@ -96,6 +96,7 @@ class MirrorManager(Plugin):
         """ Send the sensors values over MQ
         """
         data = {}
+	self.log.debug(u"==> receive value '%s' for device id %s" % (value, device_id))
         for sensor in self.sensors[device_id]:
             data[self.sensors[device_id][sensor]] = value
         self.log.debug(u"==> Update Sensor '%s' for device id %s (%s)" % (format(data), device_id, self.device_list[device_id]["name"]))    # {u'id': u'value'}

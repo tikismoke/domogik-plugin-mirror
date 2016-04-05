@@ -135,6 +135,6 @@ class Mirror:
                     self._log.debug("Action on : mir:ror")
                     self._log.debug("mir:ror faced down")
                     return "mirror", "low"
-        return None, None, None
+        return None, None
 
 
