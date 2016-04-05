@@ -63,6 +63,12 @@ class MirrorManager(Plugin):
         self.sensors = self.get_sensors(self.devices)
         self.log.info(u"==> sensors:   %s" % format(self.sensors))        # ==> sensors:   {'device id': 'sensor name': 'sensor id'}
 
+	self.address={}
+	for a_device in self.devices:
+            # create a dic to get device address
+            self.address[self.get_parameter(a_device, "address")] = a_device["id"]
+	self.log.info(u"==> sensors:   %s" %format(self.address))
+
         # check if the plugin is configured. If not, this will stop the plugin and log an error
         if not self.check_configured():
             return
@@ -92,14 +98,15 @@ class MirrorManager(Plugin):
         mirror_process.start()
         self.ready()
 
-    def send_pub_data(self, device_id, value):
+    def send_pub_data(self, device_address, value):
         """ Send the sensors values over MQ
         """
         data = {}
-	self.log.debug(u"==> receive value '%s' for device id %s" % (value, device_id))
-        for sensor in self.sensors[device_id]:
-            data[self.sensors[device_id][sensor]] = value
-        self.log.debug(u"==> Update Sensor '%s' for device id %s (%s)" % (format(data), device_id, self.device_list[device_id]["name"]))    # {u'id': u'value'}
+	self.log.debug(u"==> receive value '%s' for device id %s" % (value, device_address))
+	
+        for sensor in self.sensors[self.address[device_address]]:
+            data[self.sensors[self.address[device_address]][sensor]] = value
+        self.log.debug(u"==> Update Sensor '%s' for device id %s " % (format(data), self.address[device_address]))    # {u'id': u'value'}
 
         try:
             self._pub.send_event('client.sensor', data)
