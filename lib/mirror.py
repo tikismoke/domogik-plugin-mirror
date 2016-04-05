@@ -93,9 +93,9 @@ class Mirror:
         self._log.info("Start listening Mir:ror")
         # infinite
         while not stop.isSet():
-            device, my_type, current = self.read()
+            device, current = self.read()
             if device != None:
-                self._callback(device, my_type, current)
+                self._callback(device, current)
 
     def read(self):
         """ Read Mir:ror device once
@@ -118,10 +118,10 @@ class Mirror:
                                  data[13]+data[14]+data[15])
                 if data[1] == '\x01':
                     self._log.debug("ztamp near from mir:ror : "+ ztamp_id)
-                    return ztamp_id, "present", "high"
+                    return ztamp_id, "high"
                 if data[1] == '\x02':
                     self._log.debug("ztamp far from mir:ror : "+ ztamp_id)
-                    return ztamp_id, "present", "low"
+                    return ztamp_id, "low"
 
             if data[0] == '\x01':
                 ### action on mir:ror
@@ -130,11 +130,11 @@ class Mirror:
                 if data[1] == '\x04':
                     self._log.debug("Action on : mir:ror")
                     self._log.debug("mir:ror faced up")
-                    return "mirror", "activated", "high"
+                    return "mirror", "high"
                 if data[1] == '\x05':
                     self._log.debug("Action on : mir:ror")
                     self._log.debug("mir:ror faced down")
-                    return "mirror", "activated", "low"
+                    return "mirror", "low"
         return None, None, None
 
 

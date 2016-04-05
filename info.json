@@ -41,48 +41,7 @@
       }
     }
   },
-  "xpl_stats": {
-    "current": {
-      "name": "current",
-      "schema": "sensor.basic",
-      "parameters": {
-        "static": [
-	    {
-            "key": "type",
-            "value": "present"
-            }
-	],
-        "device": [],
-        "dynamic": [
-          {
-            "key": "current",
-            "ignore_values": "",
-            "sensor": "present"
-          }
-        ]
-      }
-    },
-    "activated": {
-      "name": "activated",
-      "schema": "sensor.basic",
-      "parameters": {
-        "static": [
-	    {
-            "key": "type",
-            "value": "activated"
-            }
-	],
-        "device": [],
-        "dynamic": [
-          {
-            "key": "current",
-            "ignore_values": "",
-            "sensor": "activated"
-          }
-        ]
-      }
-    }
-  },
+  "xpl_stats": {},
   "device_types": {
     "mirror.mirror": {
       "id": "mirror.mirror",
@@ -95,7 +54,7 @@
       "parameters": [
         {
           "key": "address",
-          "xpl": true,
+          "xpl": false,
           "description": "The self mirror (mirror)",
           "type": "string",
           "default": "mirror"
@@ -113,7 +72,7 @@
       "parameters": [
         {
           "key": "address",
-          "xpl": true,
+          "xpl": false,
           "description": "Device adress (ex: 000008d00218c10916a8a9000000)",
           "type": "string"
         }
@@ -126,10 +85,10 @@
     "author_email": "new.domodroid at gmail.com",
     "dependencies": [],
     "description": "Mirror interface",
-    "domogik_min_version": "0.4.0",
+    "domogik_min_version": "0.5.0",
     "name": "mirror",
     "type": "plugin",
-    "version": "0.1",
+    "version": "0.2",
     "tags": [
       "mirror",
       "rfid",
