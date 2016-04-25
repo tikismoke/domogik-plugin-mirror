@@ -35,7 +35,7 @@ Implements
 """
 
 import binascii
-
+import datetime
 
 class MirrorException(Exception):
     """
@@ -119,25 +119,26 @@ class Mirror:
                                  data[13]+data[14]+data[15])
                 if data[1] == '\x01':
                     self._log.debug("ztamp near from mir:ror : "+ ztamp_id)
+		    # handle device features detection 
+		    self._cb_device_detected({
+	    		"device_type" : "mirror.rfid",
+	                "reference" : "ztamp present at:"+datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y"),
+    		        "global" : [
+			    {
+                		"key" : "address",
+                                "value" : ztamp_id
+	                    }
+		        ],
+            		"xpl" : [],
+	                "xpl_commands" : {},
+    		        "xpl_stats" : {}
+	                })
+                    self._log.info("cb_detected pass")
                     return ztamp_id, "high"
+
                 if data[1] == '\x02':
                     self._log.debug("ztamp far from mir:ror : "+ ztamp_id)
                     return ztamp_id, "low"
-
-		# handle device features detection 
-		self.cb_device_detected({
-	    	    "device_type" : "mirror.rfid",
-	            "reference" : "",
-    		    "global" : [
-			{
-                	    "key" : "address",
-                            "value" : ztamp_id
-	                }
-		    ],
-            	    "xpl" : [],
-	            "xpl_commands" : {},
-    		    "xpl_stats" : {}
-                })
 
 
             if data[0] == '\x01':
