@@ -54,13 +54,13 @@ class Mirror:
     """ Helpers for Mir:ror
     """
 
-    def __init__(self, log, device_detected, callback):
+    def __init__(self, log, cb_device_detected, callback):
         """ Init Mirror object
             @param log : log instance
             @param callback : callback
         """
         self._log = log
-	self.device_detected = device_detected
+	self._cb_device_detected = cb_device_detected
         self._callback = callback
         self._mirror = None
 
