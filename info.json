@@ -88,7 +88,7 @@
     "domogik_min_version": "0.5.0",
     "name": "mirror",
     "type": "plugin",
-    "version": "0.2",
+    "version": "0.3",
     "tags": [
       "mirror",
       "rfid",

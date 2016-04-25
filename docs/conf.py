@@ -13,7 +13,7 @@ master_doc = 'index'
 ### part to update ###################################
 project = u'domogik-plugin-mirror'
 copyright = u'2016, Tikismoke'
-version = '0.2'
+version = '0.3'
 release = version
 ######################################################
 

@@ -2,6 +2,11 @@
 Changelog
 =========
 
+0.3
+===
+
+* Detected ztamp now working
+
 0.2
 ===
 
