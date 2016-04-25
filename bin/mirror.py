@@ -35,27 +35,39 @@ Implements
 @organization: Domogik
 """
 
-from domogik.xpl.common.xplmessage import XplMessage
-from domogik.xpl.common.plugin import XplPlugin
+from domogik.common.plugin import Plugin
+from domogikmq.message import MQMessage
+
 from domogik_packages.plugin_mirror.lib.mirror import Mirror
 from domogik_packages.plugin_mirror.lib.mirror import MirrorException
+
 import threading
 
 
-class MirrorManager(XplPlugin):
+class MirrorManager(Plugin):
     """ Manage the Mir:ror device and connect it to xPL
     """
 
     def __init__(self):
         """ Init plugin
         """
-        XplPlugin.__init__(self, name='mirror')
+        Plugin.__init__(self, name='mirror')
 
         ### get the devices list
         # for this plugin, if no devices are created we won't be able to use devices.
         # but.... if we stop the plugin right now, we won't be able to detect existing device and send events about them
         # so we don't stop the plugin if no devices are created
         self.devices = self.get_device_list(quit_if_no_device=False)
+
+        # get the sensors id per device :
+        self.sensors = self.get_sensors(self.devices)
+        self.log.info(u"==> sensors:   %s" % format(self.sensors))        # ==> sensors:   {'device id': 'sensor name': 'sensor id'}
+
+	self.address={}
+	for a_device in self.devices:
+            # create a dic to get device address
+            self.address[self.get_parameter(a_device, "address")] = a_device["id"]
+	self.log.info(u"==> sensors:   %s" %format(self.address))
 
         # check if the plugin is configured. If not, this will stop the plugin and log an error
         if not self.check_configured():
@@ -65,7 +77,7 @@ class MirrorManager(XplPlugin):
         mirror_device = str(self.get_config('device'))
 
         # Init Mir:ror
-        mirror  = Mirror(self.log, self.send_xpl)
+        mirror  = Mirror(self.log, self.send_pub_data)
 
         # Open Mir:ror
         try:
@@ -79,26 +91,31 @@ class MirrorManager(XplPlugin):
         # Start reading Mir:ror
         mirror_process = threading.Thread(None,
                                    mirror.listen,
-                                   "mirror-process-reader",
+				   "mirror-process-reader",
                                    (self.get_stop(),),
                                    {})
         self.register_thread(mirror_process)
         mirror_process.start()
         self.ready()
 
-
-    def send_xpl(self, device, type, current):
-        """ Send xPL message on network
+    def send_pub_data(self, device_address, value):
+        """ Send the sensors values over MQ
         """
-        print("device:%s, type:%s, current:%s" % (device, type, current))
-        msg = XplMessage()
-        msg.set_type("xpl-trig")
-        msg.set_schema("sensor.basic")
-        msg.add_data({"device" : device})
-        msg.add_data({"type" : type})
-        msg.add_data({"current" : current})
-        self.myxpl.send(msg)
-	print(msg)
+        data = {}
+	self.log.debug(u"==> receive value '%s' for device id %s" % (value, device_address))
+	try:	
+            for sensor in self.sensors[self.address[device_address]]:
+	        data[self.sensors[self.address[device_address]][sensor]] = value
+    	    self.log.debug(u"==> Update Sensor '%s' for device id %s " % (format(data), self.address[device_address]))    # {u'id': u'value'}
+	except:
+	    self.log.error(u"==> Unknow device with address %s " % (device_address))
+	    pass
+        try:
+            self._pub.send_event('client.sensor', data)
+        except:
+            # We ignore the message if some values are not correct
+            self.log.debug(u"Bad MQ message to send. This may happen due to some invalid rainhour data. MQ data is : {0}".format(data))
+            pass
 
 if __name__ == "__main__":
     MirrorManager()

@@ -15,7 +15,21 @@
     "present": {
       "name": "Present",
       "data_type": "DT_State",
-      "conversion": "",
+      "conversion": "from_low_high_to_DT_State",
+      "incremental": false,
+      "timeout": 0,
+      "history": {
+        "store": true,
+        "duplicate": false,
+        "max": 0,
+        "expire": 0,
+        "round_value": 0
+      }
+    },
+    "activated": {
+      "name": "Activated",
+      "data_type": "DT_State",
+      "conversion": "from_low_high_to_DT_State",
       "incremental": false,
       "timeout": 0,
       "history": {
@@ -27,45 +41,30 @@
       }
     }
   },
-  "xpl_stats": {
-    "current": {
-      "name": "current",
-      "schema": "sensor.basic",
-      "parameters": {
-        "static": [],
-        "device": [],
-        "dynamic": [
-          {
-            "key": "current",
-            "ignore_values": "",
-            "sensor": "present"
-          }
-        ]
-      }
-    }
-  },
+  "xpl_stats": {},
   "device_types": {
-    "mirror": {
+    "mirror.mirror": {
       "id": "mirror.mirror",
-      "description": "Switch one channel on a device",
+      "description": "Mir:ror device",
       "name": "Mirror",
       "commands": [],
       "sensors": [
-        "present"
+        "activated"
       ],
       "parameters": [
         {
           "key": "address",
-          "xpl": true,
+          "xpl": false,
           "description": "The self mirror (mirror)",
-          "type": "string"
+          "type": "string",
+          "default": "mirror"
         }
       ]
     },
-    "ztamp": {
-      "id": "mirror.tag",
+    "mirror.rfid": {
+      "id": "mirror.rfid",
       "description": "Simple rfid tag like ztamp",
-      "name": "Tag",
+      "name": "Rfid",
       "commands": [],
       "sensors": [
         "present"
@@ -73,27 +72,27 @@
       "parameters": [
         {
           "key": "address",
-          "xpl": true,
+          "xpl": false,
           "description": "Device adress (ex: 000008d00218c10916a8a9000000)",
           "type": "string"
         }
       ]
     }
   },
+  "json_version": 2,
   "identity": {
     "author": "tikismoke",
     "author_email": "new.domodroid at gmail.com",
     "dependencies": [],
     "description": "Mirror interface",
-    "domogik_min_version": "0.4.0",
+    "domogik_min_version": "0.5.0",
     "name": "mirror",
     "type": "plugin",
-    "version": "0.1",
+    "version": "0.2",
     "tags": [
       "mirror",
       "rfid",
       "ztamp"
     ]
-  },
-  "json_version": 2
+  }
 }

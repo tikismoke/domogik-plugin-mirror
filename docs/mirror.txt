@@ -1,71 +1,63 @@
-.. _index:
-
-===================
+=============
 Plugin mirror
-===================
+=============
+
 
 Purpose
 =======
+Mir:ror plugin allows to use Mir:ror by `Violet <http://www.nabaztag.com/mirror/indexEN.html>`_ device.
 
-.. raw:: html
+Mir:ror is a small passive RFID reader which is provided with RFID like litte rabbits (Nanoztag) or Stamps (zTamps).
+Each RFID element has an unique ID. The plugin will send an event with the ID when a RFID element is near Mir:ror or if you put it far from Mir:ror.
 
-   <br />
-   <hr>
-
-Dependencies
+Known issues
 ============
+Using Mir:ror device on (or near) a metallic ground shield may the RFID elements detection fail.
 
-.. raw:: html
+How to plug
+===========
+Just plug USB on your computer. Mir:ror should light on.
 
-   <br />
-   <hr>
+Permissions management
+======================
+The needed udev rule is given while installing the plugin.
 
 Plugin configuration
 ====================
 
-.. raw:: html
+=============== =============== ===========
+Key             Default value   Description
+=============== =============== ===========
+device          /dev/mirror     This is the address of the Mir:ror device.
+=============== =============== ===========
 
-   <br />
-   <hr>
+You can now start the plugin (start button).
 
-Create the devices
-==================
+Creating a device for the Mir:ror
+=================================
+In administration, go to **Organization > Devices** page. Create a new device like this :
 
-Device parameters configuration
--------------------------------
-
-X parameters are needed for a domogik device creation ...
-
-
-===================== =========================== ======================================================================
-Key                   Type                        Description
-===================== =========================== ======================================================================
-key1                  datatype                    ...
---------------------- --------------------------- ----------------------------------------------------------------------
-key2                  datatype                    ...
-===================== =========================== ======================================================================
+=========== ======================= ===========
+Field       Suggested value         Description
+=========== ======================= ===========
+Name        Mir:ror                 The name you want to give to your Mir:ror device
+Address     mirror
+Description                         a short description (Placement, usage, etc)
+Reference                           the device reference (model, etc)
+=========== ======================= ===========
 
 
-.. raw:: html
+Creating a device for a RFID element
+====================================
+In administration, go to **Organization > Devices** page. Create a new device like this :
 
-   <br />
-   <hr>
+=========== =============================== ===========
+Field       Suggested value                 Description
+=========== =============================== ===========
+Name        Green nanoztag                  The name you want to give to your RFID element
+Address     000008d00218c10916a8a9000000    The id of the RFID element.
+Description                                 a short description (Placement, usage, etc)
+Reference                                   the device reference (model, etc)
+=========== =============================== ===========
 
-Start the plugin
-================
-
-You can now start the plugin (start button) and use the created devices.
-
-.. raw:: html
-
-   <br />
-   <hr>
-
-Set up your widgets on the user interface
-=========================================
-
-You can now place the widgets of your devices features on the user interface.
-
-.. raw:: html
-
-   <br />
+I had some problem and need to run "od -x < /dev/mirror" at least once to make my mirror working.

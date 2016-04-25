@@ -2,7 +2,12 @@
 Changelog
 =========
 
+0.2
+===
+
+* Workng on non xpl version
+
 0.1
 ===
 
-* Plugin creation
+* Plugin creation based on 0.3 old plugin
