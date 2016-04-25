@@ -31,7 +31,6 @@ package = "plugin_mirror"
 template_dir = "{0}/{1}/admin/templates".format(get_packages_directory(), package)
 static_dir = "{0}/{1}/admin/static".format(get_packages_directory(), package)
 geterrorlogcmd = "{0}/{1}/admin/geterrorlog.sh".format(get_packages_directory(), package)
-getinformationslogcmd = "{0}/{1}/admin/getinformationlog.sh".format(get_packages_directory(), package)
 
 plugin_mirror_adm = Blueprint(package, __name__,
                         template_folder = template_dir,
@@ -48,7 +47,6 @@ def index(client_id):
             client_detail = detail,
             mactive="clients",
             active = 'advanced',
-            informations = get_info_from_log(getinformationslogcmd),
             errorlog = get_info_from_log(geterrorlogcmd))
 
     except TemplateNotFound:
