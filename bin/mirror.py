@@ -103,11 +103,13 @@ class MirrorManager(Plugin):
         """
         data = {}
 	self.log.debug(u"==> receive value '%s' for device id %s" % (value, device_address))
-	
-        for sensor in self.sensors[self.address[device_address]]:
-            data[self.sensors[self.address[device_address]][sensor]] = value
-        self.log.debug(u"==> Update Sensor '%s' for device id %s " % (format(data), self.address[device_address]))    # {u'id': u'value'}
-
+	try:	
+            for sensor in self.sensors[self.address[device_address]]:
+	        data[self.sensors[self.address[device_address]][sensor]] = value
+    	    self.log.debug(u"==> Update Sensor '%s' for device id %s " % (format(data), self.address[device_address]))    # {u'id': u'value'}
+	except:
+	    self.log.error(u"==> Unknow device with address %s " % (device_address))
+	    pass
         try:
             self._pub.send_event('client.sensor', data)
         except:
