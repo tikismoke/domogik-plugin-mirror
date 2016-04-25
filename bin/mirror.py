@@ -61,23 +61,24 @@ class MirrorManager(Plugin):
 
         # get the sensors id per device :
         self.sensors = self.get_sensors(self.devices)
-        self.log.info(u"==> sensors:   %s" % format(self.sensors))        # ==> sensors:   {'device id': 'sensor name': 'sensor id'}
+        self.log.info(
+            u"==> sensors:   %s" % format(self.sensors))  # ==> sensors:   {'device id': 'sensor name': 'sensor id'}
 
-	self.address={}
-	for a_device in self.devices:
+        self.address = {}
+        for a_device in self.devices:
             # create a dic to get device address
             self.address[self.get_parameter(a_device, "address")] = a_device["id"]
-	self.log.info(u"==> sensors:   %s" %format(self.address))
+        self.log.info(u"==> sensors:   %s" % format(self.address))
 
         # check if the plugin is configured. If not, this will stop the plugin and log an error
         if not self.check_configured():
             return
 
-#        self._config = Query(self.myxpl, self.log)
+        #        self._config = Query(self.myxpl, self.log)
         mirror_device = str(self.get_config('device'))
 
         # Init Mir:ror
-        mirror  = Mirror(self.log, self.send_pub_data)
+        mirror = Mirror(self.log, self.send_pub_data)
 
         # Open Mir:ror
         try:
@@ -90,10 +91,10 @@ class MirrorManager(Plugin):
 
         # Start reading Mir:ror
         mirror_process = threading.Thread(None,
-                                   mirror.listen,
-				   "mirror-process-reader",
-                                   (self.get_stop(),),
-                                   {})
+                                          mirror.listen,
+                                          "mirror-process-reader",
+                                          (self.get_stop(),),
+                                          {})
         self.register_thread(mirror_process)
         mirror_process.start()
         self.ready()
@@ -102,20 +103,24 @@ class MirrorManager(Plugin):
         """ Send the sensors values over MQ
         """
         data = {}
-	self.log.debug(u"==> receive value '%s' for device id %s" % (value, device_address))
-	try:	
+        self.log.debug(u"==> receive value '%s' for device id %s" % (value, device_address))
+        try:
             for sensor in self.sensors[self.address[device_address]]:
-	        data[self.sensors[self.address[device_address]][sensor]] = value
-    	    self.log.debug(u"==> Update Sensor '%s' for device id %s " % (format(data), self.address[device_address]))    # {u'id': u'value'}
-	except:
-	    self.log.error(u"==> Unknow device with address %s " % (device_address))
-	    pass
+                data[self.sensors[self.address[device_address]][sensor]] = value
+            self.log.debug(u"==> Update Sensor '%s' for device id %s " % (
+            format(data), self.address[device_address]))  # {u'id': u'value'}
+        except:
+            self.log.error(u"==> Unknow device with address %s " % (device_address))
+            pass
         try:
             self._pub.send_event('client.sensor', data)
         except:
             # We ignore the message if some values are not correct
-            self.log.debug(u"Bad MQ message to send. This may happen due to some invalid rainhour data. MQ data is : {0}".format(data))
+            self.log.debug(
+                u"Bad MQ message to send. This may happen due to some invalid rainhour data. MQ data is : {0}".format(
+                    data))
             pass
+
 
 if __name__ == "__main__":
     MirrorManager()
