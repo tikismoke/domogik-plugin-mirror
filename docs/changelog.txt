@@ -5,7 +5,7 @@ Changelog
 0.2
 ===
 
-* Workng on non xpl version
+* Working on non xpl version
 
 0.1
 ===
