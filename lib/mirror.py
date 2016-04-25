@@ -133,7 +133,6 @@ class Mirror:
 	                "xpl_commands" : {},
     		        "xpl_stats" : {}
 	                })
-                    self._log.info("cb_detected pass")
                     return ztamp_id, "high"
 
                 if data[1] == '\x02':
