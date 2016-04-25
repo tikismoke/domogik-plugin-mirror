@@ -54,12 +54,13 @@ class Mirror:
     """ Helpers for Mir:ror
     """
 
-    def __init__(self, log, callback):
+    def __init__(self, log, device_detected, callback):
         """ Init Mirror object
             @param log : log instance
             @param callback : callback
         """
         self._log = log
+	self.device_detected = device_detected
         self._callback = callback
         self._mirror = None
 
@@ -123,6 +124,22 @@ class Mirror:
                     self._log.debug("ztamp far from mir:ror : "+ ztamp_id)
                     return ztamp_id, "low"
 
+		# handle device features detection 
+		self.cb_device_detected({
+	    	    "device_type" : "mirror.rfid",
+	            "reference" : "",
+    		    "global" : [
+			{
+                	    "key" : "address",
+                            "value" : ztamp_id
+	                }
+		    ],
+            	    "xpl" : [],
+	            "xpl_commands" : {},
+    		    "xpl_stats" : {}
+                })
+
+
             if data[0] == '\x01':
                 ### action on mir:ror
                 # Only the data[0] and data[1] are used in this case
@@ -135,6 +152,7 @@ class Mirror:
                     self._log.debug("Action on : mir:ror")
                     self._log.debug("mir:ror faced down")
                     return "mirror", "low"
+
         return None, None
 
 

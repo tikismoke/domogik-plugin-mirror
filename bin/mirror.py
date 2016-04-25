@@ -78,7 +78,10 @@ class MirrorManager(Plugin):
         mirror_device = str(self.get_config('device'))
 
         # Init Mir:ror
-        mirror = Mirror(self.log, self.send_pub_data)
+        mirror = Mirror(self.log, self.device_detected, self.send_pub_data)
+	
+	#Start listening device.update over MQ
+	self.add_mq_sub('device.update')
 
         # Open Mir:ror
         try:
@@ -110,7 +113,7 @@ class MirrorManager(Plugin):
             self.log.debug(u"==> Update Sensor '%s' for device id %s " % (
             format(data), self.address[device_address]))  # {u'id': u'value'}
         except:
-            self.log.error(u"==> Unknow device with address %s " % (device_address))
+            self.log.info(u"==> Unknow device with address %s " % (device_address))
             pass
         try:
             self._pub.send_event('client.sensor', data)
