@@ -106,22 +106,20 @@ class MirrorManager(Plugin):
         """ Send the sensors values over MQ
         """
         data = {}
-        self.log.debug(u"==> receive value '%s' for device id %s" % (value, device_address))
+        self.log.debug(u"==> receive value '%s' for device address %s" % (value, device_address))
         try:
             for sensor in self.sensors[self.address[device_address]]:
                 data[self.sensors[self.address[device_address]][sensor]] = value
             self.log.debug(u"==> Update Sensor '%s' for device id %s " % (
             format(data), self.address[device_address]))  # {u'id': u'value'}
         except:
-            self.log.info(u"==> Unknow device with address %s " % (device_address))
+            self.log.error(u"==> Unknow device with address %s " % (device_address))
             pass
         try:
             self._pub.send_event('client.sensor', data)
         except:
             # We ignore the message if some values are not correct
-            self.log.debug(
-                u"Bad MQ message to send. This may happen due to some invalid rainhour data. MQ data is : {0}".format(
-                    data))
+            self.log.error(u"Bad MQ message to send: {0}".format( data))
             pass
 
 
